@@ -19,8 +19,6 @@ public class InitStockListService {
     private String shUrl;
     @Value("sz")
     private String szUrl;
-    @Value("sina_prefix")
-    private String prefix;
 
     @Autowired
     private SpiderCrawlerService spiderCrawlerService;

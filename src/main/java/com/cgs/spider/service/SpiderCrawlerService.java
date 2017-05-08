@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -40,7 +39,7 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    public Map<String,String> getStockDetailList(List<String> stockIds){
+    public Map<String,String> getStockDetailList(Map<String,String> stockMap){
         Map<String,String> stockDetailMap = new HashMap<>();
 
         return stockDetailMap;
@@ -54,9 +53,12 @@ public class SpiderCrawlerService {
             if (element.toString().contains(exchangeForShort)){
                 String href = element.select("a").attr("href");
                 String[] strArray = href.split("/|.html");
-                stockIdAndHrefMap.put(strArray[4].replace(exchangeForShort,""),href);
+                for (int i=0; i<strArray.length; i++){
+                    if (strArray[i].contains(exchangeForShort)){
+                        stockIdAndHrefMap.put(strArray[i].replace(exchangeForShort,""),href);
+                    }
+                }
             }
-
         }
         return stockIdAndHrefMap;
     }
