@@ -11,14 +11,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@Component
 public class SpiderCrawlerService {
 
     private  CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -39,10 +40,16 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    public Map<String,String> getStockDetailList(Map<String,String> stockMap){
-        Map<String,String> stockDetailMap = new HashMap<>();
-
-        return stockDetailMap;
+    public Map<String,String> getCompanyDetailList(Map<String,String> stockMap) throws IOException {
+        Map<String,String> companyDetailMap = new HashMap<>();
+        for (String key : stockMap.keySet()){
+            String url = Constant.COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
+            HttpGet httpGet = new HttpGet(url);
+            CloseableHttpResponse response = httpClient.execute(httpGet);
+            String companyDetailValue = parseCompanyDetailList(EntityUtils.toString(response.getEntity(),"gb2312"));
+            companyDetailMap.put(key,companyDetailValue);
+        }
+        return companyDetailMap;
     }
 
     private Map<String,String> parseStockIdList(String content,String exchangeForShort){
@@ -61,6 +68,19 @@ public class SpiderCrawlerService {
             }
         }
         return stockIdAndHrefMap;
+    }
+
+    private String parseCompanyDetailList(String content){
+        StringBuilder sb = new StringBuilder();
+        if (!ObjectUtils.isEmpty(content)){
+            int beginIndex = content.indexOf("defjson:");
+            int endIndex = content.indexOf("maketr:");
+            String str = content.substring(beginIndex,endIndex);
+            str = str.replaceAll("defjson:","").replaceAll(" ","");
+            str = str.substring(0,str.lastIndexOf(","));
+            System.out.println(str);
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {
