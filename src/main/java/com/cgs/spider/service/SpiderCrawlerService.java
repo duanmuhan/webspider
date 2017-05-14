@@ -1,5 +1,6 @@
 package com.cgs.spider.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -40,7 +42,7 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    public Map<String,String> getCompanyDetailList(Map<String,String> stockMap) throws IOException {
+    public Map<String,String> getCompanyDetailList(Map<String,String> stockMap) throws IOException, InterruptedException {
         Map<String,String> companyDetailMap = new HashMap<>();
         for (String key : stockMap.keySet()){
             String url = Constant.COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
@@ -48,6 +50,7 @@ public class SpiderCrawlerService {
             CloseableHttpResponse response = httpClient.execute(httpGet);
             String companyDetailValue = parseCompanyDetailList(EntityUtils.toString(response.getEntity(),"gb2312"));
             companyDetailMap.put(key,companyDetailValue);
+            Thread.sleep(1000);
         }
         return companyDetailMap;
     }
@@ -73,12 +76,19 @@ public class SpiderCrawlerService {
     private String parseCompanyDetailList(String content){
         StringBuilder sb = new StringBuilder();
         if (!ObjectUtils.isEmpty(content)){
-            int beginIndex = content.indexOf("defjson:");
-            int endIndex = content.indexOf("maketr:");
-            String str = content.substring(beginIndex,endIndex);
-            str = str.replaceAll("defjson:","").replaceAll(" ","");
-            str = str.substring(0,str.lastIndexOf(","));
-            System.out.println(str);
+            Document document = Jsoup.parse(content);
+            String benefitText = document.getElementById("benefit").text();
+            String mainText = document.getElementById("main").text();
+            String debetText = document.getElementById("debt").text();
+            String cashText = document.getElementById("cash").text();
+            String eachText = document.getElementById("each").text();
+            String operateText = document.getElementById("operate").text();
+            List<String> benefitList = JSONObject.parseArray(benefitText).toJavaList(String.class);
+            List<String> mainList = JSONObject.parseArray(mainText).toJavaList(String.class);
+            List<String> debetList = JSONObject.parseArray(debetText).toJavaList(String.class);
+            List<String> cashList = JSONObject.parseArray(cashText).toJavaList(String.class);
+            List<String> eachList = JSONObject.parseArray(eachText).toJavaList(String.class);
+            List<String> operateList = JSONObject.parseArray(operateText).toJavaList(String.class);
         }
         return sb.toString();
     }
@@ -87,8 +97,11 @@ public class SpiderCrawlerService {
         String url = "http://quote.eastmoney.com/stocklist.html#sh";
         SpiderCrawlerService spiderCrawlerService = new SpiderCrawlerService();
         try {
-            spiderCrawlerService.getStockIdAndHrefMap(url,Constant.EXCHANGE_SHENZHEN_FOR_SHORT);
+            Map<String,String> urlMap = spiderCrawlerService.getStockIdAndHrefMap(url,Constant.EXCHANGE_SHENZHEN_FOR_SHORT);
+            spiderCrawlerService.getCompanyDetailList(urlMap);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

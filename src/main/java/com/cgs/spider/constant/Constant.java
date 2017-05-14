@@ -14,6 +14,6 @@ public interface Constant {
     String COMPANY_TABLE_ID = "dt_1";
     String EXCHANGE_SHANGHAI_URL="http://quote.eastmoney.com/stocklist.html#sh";
     String EXCHANGE_SHENZHEN_URL="http://quote.eastmoney.com/stocklist.html#sz";
-    String COMPANY_BAOBIAO_URL_PREFIX ="http://data.eastmoney.com/bbsj/stock";
-    String COMPANY_BAOBIAO_URL_POSTFIX ="/yjbb.html";
+    String COMPANY_BAOBIAO_URL_PREFIX ="http://stockpage.10jqka.com.cn/";
+    String COMPANY_BAOBIAO_URL_POSTFIX ="/finance/#finance";
 }

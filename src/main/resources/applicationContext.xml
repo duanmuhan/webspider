@@ -10,9 +10,9 @@
         <property name="locations">
             <list>
                 <value>classpath:config/*.properties</value>
-                <value>classpath:config/stock/*.properties</value>
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
+    <import resource="./redis/redis.xml"></import>
 </beans>

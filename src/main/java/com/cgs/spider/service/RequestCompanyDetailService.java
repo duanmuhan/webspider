@@ -25,6 +25,8 @@ public class RequestCompanyDetailService {
             companyDetailMap = spiderCrawlerService.getCompanyDetailList(stockIdMap);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return companyDetailMap;
     }
