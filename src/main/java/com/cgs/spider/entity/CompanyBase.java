@@ -1,9 +1,13 @@
 package com.cgs.spider.entity;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2017/5/15.
  */
 public class CompanyBase {
+
+    private static String FIELD_SEPERATOR = ",";
 
     private int stockId;
     private double perShareEarnings;
@@ -21,7 +25,8 @@ public class CompanyBase {
     private double operationCashFlowPerShare;
     private double grossProfitMargin;
     private double inventoryTurnoverRatio;
-    private double netProfitMarginonSales;
+    private double netProfitMarginOnSales;
+    private Date date;
 
     public int getStockId() {
         return stockId;
@@ -151,11 +156,28 @@ public class CompanyBase {
         this.inventoryTurnoverRatio = inventoryTurnoverRatio;
     }
 
-    public double getNetProfitMarginonSales() {
-        return netProfitMarginonSales;
+    public double getNetProfitMarginOnSales() {
+        return netProfitMarginOnSales;
     }
 
-    public void setNetProfitMarginonSales(double netProfitMarginonSales) {
-        this.netProfitMarginonSales = netProfitMarginonSales;
+    public void setNetProfitMarginOnSales(double netProfitMarginOnSales) {
+        this.netProfitMarginOnSales = netProfitMarginOnSales;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String toRedisString(){
+        return stockId + FIELD_SEPERATOR + perShareEarnings + FIELD_SEPERATOR + retainedProfits + FIELD_SEPERATOR + increaseInRetainedProfits
+                + FIELD_SEPERATOR + increaseInNetProfit + FIELD_SEPERATOR + nonNetProfitDeduction + FIELD_SEPERATOR + increaseInNonNetProfitDeduction
+                + FIELD_SEPERATOR + grossRevenue + FIELD_SEPERATOR + yearOnYearGrowthRateOfTotalRevenue + FIELD_SEPERATOR + netAssertValuePerShare
+                + FIELD_SEPERATOR + rateOfReturnOnCommonStockholders + FIELD_SEPERATOR + netAssertYieldDiluted + capitalReversePerShare
+                + FIELD_SEPERATOR + operationCashFlowPerShare + FIELD_SEPERATOR + grossProfitMargin + FIELD_SEPERATOR + inventoryTurnoverRatio
+                + FIELD_SEPERATOR + netProfitMarginOnSales + FIELD_SEPERATOR + date;
     }
 }

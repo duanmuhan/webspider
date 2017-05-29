@@ -7,6 +7,9 @@ import com.cgs.spider.entity.CompanyBase;
  */
 public class CompanyBaseVO {
 
+    private static String REPLACE_STRING = "%|万|亿";
+    private static String REPLACE_BOOLEAN_STRING = "true|false";
+
     private String stockId;
     private String perShareEarnings;
     private String retainedProfits;
@@ -39,6 +42,10 @@ public class CompanyBaseVO {
     }
 
     public void setPerShareEarnings(String perShareEarnings) {
+        perShareEarnings = perShareEarnings.replaceAll(REPLACE_STRING,"");
+        if (perShareEarnings.equals("false")){
+            perShareEarnings = "0";
+        }
         this.perShareEarnings = perShareEarnings;
     }
 
@@ -47,6 +54,10 @@ public class CompanyBaseVO {
     }
 
     public void setRetainedProfits(String retainedProfits) {
+        retainedProfits = retainedProfits.replaceAll(REPLACE_STRING,"");
+        if (retainedProfits.equals("false")){
+            retainedProfits = "0";
+        }
         this.retainedProfits = retainedProfits;
     }
 
@@ -55,6 +66,10 @@ public class CompanyBaseVO {
     }
 
     public void setIncreaseInRetainedProfits(String increaseInRetainedProfits) {
+        increaseInRetainedProfits = increaseInRetainedProfits.replaceAll(REPLACE_STRING,"");
+        if (increaseInRetainedProfits.equals("false")){
+            increaseInRetainedProfits = "0";
+        }
         this.increaseInRetainedProfits = increaseInRetainedProfits;
     }
 
@@ -63,6 +78,10 @@ public class CompanyBaseVO {
     }
 
     public void setIncreaseInNetProfit(String increaseInNetProfit) {
+        increaseInNetProfit = increaseInNetProfit.replaceAll(REPLACE_STRING,"");
+        if (increaseInNetProfit.equals("false")){
+            increaseInNetProfit = "0";
+        }
         this.increaseInNetProfit = increaseInNetProfit;
     }
 
@@ -71,6 +90,10 @@ public class CompanyBaseVO {
     }
 
     public void setNonNetProfitDeduction(String nonNetProfitDeduction) {
+        nonNetProfitDeduction = nonNetProfitDeduction.replaceAll(REPLACE_STRING,"");
+        if (nonNetProfitDeduction.equals("false")){
+            nonNetProfitDeduction = "0";
+        }
         this.nonNetProfitDeduction = nonNetProfitDeduction;
     }
 
@@ -79,6 +102,10 @@ public class CompanyBaseVO {
     }
 
     public void setIncreaseInNonNetProfitDeduction(String increaseInNonNetProfitDeduction) {
+        increaseInNonNetProfitDeduction = increaseInNonNetProfitDeduction.replaceAll(REPLACE_STRING,"");
+        if (increaseInNonNetProfitDeduction.equals("false")){
+            increaseInNonNetProfitDeduction = "0";
+        }
         this.increaseInNonNetProfitDeduction = increaseInNonNetProfitDeduction;
     }
 
@@ -87,6 +114,10 @@ public class CompanyBaseVO {
     }
 
     public void setGrossRevenue(String grossRevenue) {
+        grossRevenue = grossRevenue.replaceAll(REPLACE_STRING,"");
+        if (grossRevenue.equals("false")){
+            grossRevenue = "0";
+        }
         this.grossRevenue = grossRevenue;
     }
 
@@ -95,6 +126,10 @@ public class CompanyBaseVO {
     }
 
     public void setYearOnYearGrowthRateOfTotalRevenue(String yearOnYearGrowthRateOfTotalRevenue) {
+        yearOnYearGrowthRateOfTotalRevenue = yearOnYearGrowthRateOfTotalRevenue.replaceAll(REPLACE_STRING,"");
+        if (yearOnYearGrowthRateOfTotalRevenue.equals("false")){
+            yearOnYearGrowthRateOfTotalRevenue = "0";
+        }
         this.yearOnYearGrowthRateOfTotalRevenue = yearOnYearGrowthRateOfTotalRevenue;
     }
 
@@ -103,6 +138,10 @@ public class CompanyBaseVO {
     }
 
     public void setNetAssertValuePerShare(String netAssertValuePerShare) {
+        netAssertValuePerShare = netAssertValuePerShare.replaceAll(REPLACE_STRING,"");
+        if (netAssertValuePerShare.equals("false")){
+            netAssertValuePerShare = "0";
+        }
         this.netAssertValuePerShare = netAssertValuePerShare;
     }
 
@@ -111,6 +150,10 @@ public class CompanyBaseVO {
     }
 
     public void setRateOfReturnOnCommonStockholders(String rateOfReturnOnCommonStockholders) {
+        rateOfReturnOnCommonStockholders = rateOfReturnOnCommonStockholders.replaceAll(REPLACE_STRING,"");
+        if (rateOfReturnOnCommonStockholders.equals("false")){
+            rateOfReturnOnCommonStockholders = "0";
+        }
         this.rateOfReturnOnCommonStockholders = rateOfReturnOnCommonStockholders;
     }
 
@@ -119,6 +162,10 @@ public class CompanyBaseVO {
     }
 
     public void setNetAssertYieldDiluted(String netAssertYieldDiluted) {
+        netAssertYieldDiluted = netAssertYieldDiluted.replaceAll(REPLACE_STRING,"");
+        if (netAssertYieldDiluted.equals("false")){
+            netAssertYieldDiluted = "0";
+        }
         this.netAssertYieldDiluted = netAssertYieldDiluted;
     }
 
@@ -127,6 +174,10 @@ public class CompanyBaseVO {
     }
 
     public void setCapitalReversePerShare(String capitalReversePerShare) {
+        capitalReversePerShare = capitalReversePerShare.replaceAll(REPLACE_STRING,"");
+        if (capitalReversePerShare.equals("false")){
+            capitalReversePerShare = "0";
+        }
         this.capitalReversePerShare = capitalReversePerShare;
     }
 
@@ -135,6 +186,10 @@ public class CompanyBaseVO {
     }
 
     public void setOperationCashFlowPerShare(String operationCashFlowPerShare) {
+        operationCashFlowPerShare.replaceAll(REPLACE_STRING,"");
+        if (operationCashFlowPerShare.equals("false")){
+            operationCashFlowPerShare = "0";
+        }
         this.operationCashFlowPerShare = operationCashFlowPerShare;
     }
 
@@ -143,6 +198,10 @@ public class CompanyBaseVO {
     }
 
     public void setGrossProfitMargin(String grossProfitMargin) {
+        grossProfitMargin = grossProfitMargin.replaceAll(REPLACE_STRING,"");
+        if (grossProfitMargin.equals("false")){
+            grossProfitMargin = "0";
+        }
         this.grossProfitMargin = grossProfitMargin;
     }
 
@@ -151,6 +210,10 @@ public class CompanyBaseVO {
     }
 
     public void setInventoryTurnoverRatio(String inventoryTurnoverRatio) {
+        inventoryTurnoverRatio = inventoryTurnoverRatio.replaceAll(REPLACE_STRING,"");
+        if (inventoryTurnoverRatio.equals("false")){
+            inventoryTurnoverRatio = "0";
+        }
         this.inventoryTurnoverRatio = inventoryTurnoverRatio;
     }
 
@@ -159,6 +222,10 @@ public class CompanyBaseVO {
     }
 
     public void setNetProfitMarginOnSales(String netProfitMarginOnSales) {
+        netProfitMarginOnSales = netProfitMarginOnSales.replaceAll(REPLACE_STRING,"");
+        if (netProfitMarginOnSales.equals("false")){
+            netProfitMarginOnSales = "0";
+        }
         this.netProfitMarginOnSales = netProfitMarginOnSales;
     }
 
@@ -189,7 +256,7 @@ public class CompanyBaseVO {
         companyBase.setOperationCashFlowPerShare(Double.valueOf(this.getOperationCashFlowPerShare()));
         companyBase.setGrossProfitMargin(Double.valueOf(this.getGrossProfitMargin()));
         companyBase.setInventoryTurnoverRatio(Double.valueOf(this.getInventoryTurnoverRatio()));
-        companyBase.setNetProfitMarginonSales(Double.valueOf(this.getNetProfitMarginOnSales()));
+        companyBase.setNetProfitMarginOnSales(Double.valueOf(this.getNetProfitMarginOnSales()));
         return companyBase;
     }
 }

@@ -1,9 +1,10 @@
 package com.cgs.spider.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
 import com.cgs.spider.constant.WebAttributeConstant;
-import com.cgs.spider.dao.CompanyDao;
+import com.cgs.spider.entity.CompanyBase;
 import com.cgs.spider.vo.CompanyBaseVO;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,7 +16,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -29,10 +31,8 @@ import java.util.Map;
 @Component
 public class SpiderCrawlerService {
 
+    private Logger logger = LoggerFactory.getLogger(SpiderCrawlerService.class);
     private  CloseableHttpClient httpClient = HttpClients.createDefault();
-
-    @Autowired
-    private CompanyDao dao;
 
     private String requestUrl(String url) throws IOException {
         HttpGet httpGet = new HttpGet(url);
@@ -50,14 +50,14 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    public Map<String,String> getCompanyDetailList(Map<String,String> stockMap) throws IOException, InterruptedException {
-        Map<String,String> companyDetailMap = new HashMap<>();
+    public Map<String,List<CompanyBase>> getCompanyDetailList(Map<String,String> stockMap) throws IOException, InterruptedException {
+        Map<String,List<CompanyBase>> companyDetailMap = new HashMap<>();
         for (String key : stockMap.keySet()){
             String url = Constant. COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpGet);
-            String companyDetailValue = parseCompanyDetailList(key,EntityUtils.toString(response.getEntity(),"gb2312"));
-            companyDetailMap.put(key,companyDetailValue);
+            List<CompanyBase> companyBaseList = parseCompanyDetailList(key,EntityUtils.toString(response.getEntity(),"gb2312"));
+            companyDetailMap.put(key,companyBaseList);
             Thread.sleep(2000);
         }
         return companyDetailMap;
@@ -81,33 +81,60 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    private String parseCompanyDetailList(String key,String content){
-        StringBuilder sb = new StringBuilder();
-        List<CompanyBaseVO> companyBaseVOList = new ArrayList<>();
+    private List<CompanyBase> parseCompanyDetailList(String key, String content){
+        List<CompanyBase> companyBaseVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
             if (document.getElementById(WebAttributeConstant.COMPANY_BASEID) != null &&
                     document.getElementById(WebAttributeConstant.COMPANY_MAIN) != null){
                 String dataContent = document.getElementById(WebAttributeConstant.COMPANY_BASEID).text();
                 String mainContent = document.getElementById(WebAttributeConstant.COMPANY_MAIN).text();
-                Map<String,String> mainMap = (Map)JSONObject.parse(mainContent);
-                System.out.println(mainContent);
+                Map<String,JSONArray> mainMap = (Map)JSONObject.parse(mainContent);
+                JSONArray jsonArray = mainMap.get("report");
+                if (jsonArray.size() == 17){
+                    List<String> dateList = ((JSONArray)jsonArray.get(0)).toJavaList(String.class);
+                    List<String> perShareEarningsList = ((JSONArray)jsonArray.get(1)).toJavaList(String.class);
+                    List<String> retainedProfitsList = ((JSONArray)jsonArray.get(2)).toJavaList(String.class);
+                    List<String> increaseInRetainedProfitsList = ((JSONArray)jsonArray.get(3)).toJavaList(String.class);
+                    List<String> increaseInNetProfitList = ((JSONArray)jsonArray.get(4)).toJavaList(String.class);
+                    List<String> nonNetProfitDeductionList = ((JSONArray)jsonArray.get(5)).toJavaList(String.class);
+                    List<String> increaseInNonNetProfitDeductionList = ((JSONArray)jsonArray.get(6)).toJavaList(String.class);
+                    List<String> grossRevenueList = ((JSONArray)jsonArray.get(7)).toJavaList(String.class);
+                    List<String> yearOnYearGrowthRateOfTotalRevenueList = ((JSONArray)jsonArray.get(8)).toJavaList(String.class);
+                    List<String> netAssertValuePerShareList = ((JSONArray)jsonArray.get(9)).toJavaList(String.class);
+                    List<String> rateOfReturnOnCommonStockholdersList = ((JSONArray)jsonArray.get(10)).toJavaList(String.class);
+                    List<String> netAssertYieldDilutedList = ((JSONArray)jsonArray.get(11)).toJavaList(String.class);
+                    List<String> capitalReversePerShareList = ((JSONArray)jsonArray.get(12)).toJavaList(String.class);
+                    List<String> operationCashFlowPerShareList = ((JSONArray)jsonArray.get(13)).toJavaList(String.class);
+                    List<String> grossProfitMarginList = ((JSONArray)jsonArray.get(14)).toJavaList(String.class);
+                    List<String> inventoryTurnoverRatioList = ((JSONArray)jsonArray.get(15)).toJavaList(String.class);
+                    List<String> netProfitMarginOnSalesList = ((JSONArray)jsonArray.get(16)).toJavaList(String.class);
+                    for (int i=0; i<dateList.size(); i++){
+                        CompanyBaseVO companyBaseVO = new CompanyBaseVO();
+                        companyBaseVO.setStockId(key);
+                        companyBaseVO.setDate(dateList.get(i));
+                        companyBaseVO.setPerShareEarnings(perShareEarningsList.get(i));
+                        companyBaseVO.setRetainedProfits(retainedProfitsList.get(i));
+                        companyBaseVO.setIncreaseInRetainedProfits(increaseInRetainedProfitsList.get(i));
+                        companyBaseVO.setIncreaseInNetProfit(increaseInNetProfitList.get(i));
+                        companyBaseVO.setNonNetProfitDeduction(nonNetProfitDeductionList.get(i));
+                        companyBaseVO.setIncreaseInNonNetProfitDeduction(increaseInNonNetProfitDeductionList.get(i));
+                        companyBaseVO.setGrossRevenue(grossRevenueList.get(i));
+                        companyBaseVO.setYearOnYearGrowthRateOfTotalRevenue(yearOnYearGrowthRateOfTotalRevenueList.get(i));
+                        companyBaseVO.setNetAssertValuePerShare(netAssertValuePerShareList.get(i));
+                        companyBaseVO.setRateOfReturnOnCommonStockholders(rateOfReturnOnCommonStockholdersList.get(i));
+                        companyBaseVO.setNetAssertYieldDiluted(netAssertYieldDilutedList.get(i));
+                        companyBaseVO.setCapitalReversePerShare(capitalReversePerShareList.get(i));
+                        companyBaseVO.setOperationCashFlowPerShare(operationCashFlowPerShareList.get(i));
+                        companyBaseVO.setGrossProfitMargin(grossProfitMarginList.get(i));
+                        companyBaseVO.setInventoryTurnoverRatio(inventoryTurnoverRatioList.get(i));
+                        companyBaseVO.setNetProfitMarginOnSales(netProfitMarginOnSalesList.get(i));
+                        companyBaseVOList.add(companyBaseVO.toCompanyBase());
+                    }
+                }
+
             }
         }
-        return sb.toString();
+        return companyBaseVOList;
     }
-
-    public static void main(String[] args) {
-        String url = "http://quote.eastmoney.com/stocklist.html#sh";
-        SpiderCrawlerService spiderCrawlerService = new SpiderCrawlerService();
-        try {
-            Map<String,String> urlMap = spiderCrawlerService.getStockIdAndHrefMap(url,Constant.EXCHANGE_SHENZHEN_FOR_SHORT);
-            spiderCrawlerService.getCompanyDetailList(urlMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
