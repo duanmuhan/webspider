@@ -2,6 +2,7 @@ package com.cgs.spider.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
+import com.cgs.spider.dao.CompanyDao;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -12,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -25,6 +27,9 @@ import java.util.Map;
 public class SpiderCrawlerService {
 
     private  CloseableHttpClient httpClient = HttpClients.createDefault();
+
+    @Autowired
+    private CompanyDao dao;
 
     private String requestUrl(String url) throws IOException {
         HttpGet httpGet = new HttpGet(url);
@@ -48,7 +53,7 @@ public class SpiderCrawlerService {
             String url = Constant.COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpGet);
-            String companyDetailValue = parseCompanyDetailList(EntityUtils.toString(response.getEntity(),"gb2312"));
+            String companyDetailValue = parseCompanyDetailList(key,EntityUtils.toString(response.getEntity(),"gb2312"));
             companyDetailMap.put(key,companyDetailValue);
             Thread.sleep(1000);
         }
@@ -73,7 +78,7 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    private String parseCompanyDetailList(String content){
+    private String parseCompanyDetailList(String key,String content){
         StringBuilder sb = new StringBuilder();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
@@ -89,6 +94,7 @@ public class SpiderCrawlerService {
             List<String> cashList = JSONObject.parseArray(cashText).toJavaList(String.class);
             List<String> eachList = JSONObject.parseArray(eachText).toJavaList(String.class);
             List<String> operateList = JSONObject.parseArray(operateText).toJavaList(String.class);
+            dao.saveCompanyInfoList(key,mainList);
         }
         return sb.toString();
     }

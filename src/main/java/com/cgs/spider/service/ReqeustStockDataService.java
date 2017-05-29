@@ -35,7 +35,6 @@ public class ReqeustStockDataService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private String requestUrl(String url) throws IOException {
