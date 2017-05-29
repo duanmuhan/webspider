@@ -1,8 +1,8 @@
 package com.cgs.spider.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
 import com.cgs.spider.dao.CompanyDao;
+import com.cgs.spider.vo.CompanyBaseVO;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -19,6 +19,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class SpiderCrawlerService {
     public Map<String,String> getCompanyDetailList(Map<String,String> stockMap) throws IOException, InterruptedException {
         Map<String,String> companyDetailMap = new HashMap<>();
         for (String key : stockMap.keySet()){
-            String url = Constant.COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
+            String url = Constant. COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpGet);
             String companyDetailValue = parseCompanyDetailList(key,EntityUtils.toString(response.getEntity(),"gb2312"));
@@ -80,21 +81,9 @@ public class SpiderCrawlerService {
 
     private String parseCompanyDetailList(String key,String content){
         StringBuilder sb = new StringBuilder();
+        List<CompanyBaseVO> companyBaseVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
-            String benefitText = document.getElementById("benefit").text();
-            String mainText = document.getElementById("main").text();
-            String debetText = document.getElementById("debt").text();
-            String cashText = document.getElementById("cash").text();
-            String eachText = document.getElementById("each").text();
-            String operateText = document.getElementById("operate").text();
-            List<String> benefitList = JSONObject.parseArray(benefitText).toJavaList(String.class);
-            List<String> mainList = JSONObject.parseArray(mainText).toJavaList(String.class);
-            List<String> debetList = JSONObject.parseArray(debetText).toJavaList(String.class);
-            List<String> cashList = JSONObject.parseArray(cashText).toJavaList(String.class);
-            List<String> eachList = JSONObject.parseArray(eachText).toJavaList(String.class);
-            List<String> operateList = JSONObject.parseArray(operateText).toJavaList(String.class);
-            dao.saveCompanyInfoList(key,mainList);
         }
         return sb.toString();
     }
