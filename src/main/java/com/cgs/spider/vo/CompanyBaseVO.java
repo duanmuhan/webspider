@@ -1,5 +1,7 @@
 package com.cgs.spider.vo;
 
+import com.cgs.spider.entity.CompanyBase;
+
 /**
  * Created by Administrator on 2017/5/29.
  */
@@ -166,5 +168,28 @@ public class CompanyBaseVO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public CompanyBase toCompanyBase(){
+        CompanyBase companyBase = new CompanyBase();
+        companyBase.setStockId(Integer.valueOf(this.getStockId()));
+        companyBase.setCapitalReversePerShare(Double.valueOf(this.getCapitalReversePerShare()));
+        companyBase.setPerShareEarnings(Double.valueOf(this.getPerShareEarnings()));
+        companyBase.setRetainedProfits(Double.valueOf(this.getRetainedProfits()));
+        companyBase.setIncreaseInNetProfit(Double.valueOf(this.getIncreaseInNetProfit()));
+        companyBase.setIncreaseInRetainedProfits(Double.valueOf(this.getIncreaseInRetainedProfits()));
+        companyBase.setNonNetProfitDeduction(Double.valueOf(this.getNonNetProfitDeduction()));
+        companyBase.setIncreaseInNonNetProfitDeduction(Double.valueOf(this.getIncreaseInNonNetProfitDeduction()));
+        companyBase.setGrossRevenue(Double.valueOf(this.getGrossRevenue()));
+        companyBase.setYearOnYearGrowthRateOfTotalRevenue(Double.valueOf(this.getYearOnYearGrowthRateOfTotalRevenue()));
+        companyBase.setNetAssertValuePerShare(Double.valueOf(this.getNetAssertValuePerShare()));
+        companyBase.setRateOfReturnOnCommonStockholders(Double.valueOf(this.getRateOfReturnOnCommonStockholders()));
+        companyBase.setNetAssertYieldDiluted(Double.valueOf(this.getNetAssertYieldDiluted()));
+        companyBase.setCapitalReversePerShare(Double.valueOf(this.getCapitalReversePerShare()));
+        companyBase.setOperationCashFlowPerShare(Double.valueOf(this.getOperationCashFlowPerShare()));
+        companyBase.setGrossProfitMargin(Double.valueOf(this.getGrossProfitMargin()));
+        companyBase.setInventoryTurnoverRatio(Double.valueOf(this.getInventoryTurnoverRatio()));
+        companyBase.setNetProfitMarginonSales(Double.valueOf(this.getNetProfitMarginOnSales()));
+        return companyBase;
     }
 }

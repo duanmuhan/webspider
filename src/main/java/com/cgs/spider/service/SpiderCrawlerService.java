@@ -1,6 +1,8 @@
 package com.cgs.spider.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
+import com.cgs.spider.constant.WebAttributeConstant;
 import com.cgs.spider.dao.CompanyDao;
 import com.cgs.spider.vo.CompanyBaseVO;
 import org.apache.http.HttpEntity;
@@ -56,7 +58,7 @@ public class SpiderCrawlerService {
             CloseableHttpResponse response = httpClient.execute(httpGet);
             String companyDetailValue = parseCompanyDetailList(key,EntityUtils.toString(response.getEntity(),"gb2312"));
             companyDetailMap.put(key,companyDetailValue);
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
         return companyDetailMap;
     }
@@ -84,6 +86,13 @@ public class SpiderCrawlerService {
         List<CompanyBaseVO> companyBaseVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
+            if (document.getElementById(WebAttributeConstant.COMPANY_BASEID) != null &&
+                    document.getElementById(WebAttributeConstant.COMPANY_MAIN) != null){
+                String dataContent = document.getElementById(WebAttributeConstant.COMPANY_BASEID).text();
+                String mainContent = document.getElementById(WebAttributeConstant.COMPANY_MAIN).text();
+                Map<String,String> mainMap = (Map)JSONObject.parse(mainContent);
+                System.out.println(mainContent);
+            }
         }
         return sb.toString();
     }
