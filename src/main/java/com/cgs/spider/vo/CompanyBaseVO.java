@@ -259,4 +259,5 @@ public class CompanyBaseVO {
         companyBase.setNetProfitMarginOnSales(Double.valueOf(this.getNetProfitMarginOnSales()));
         return companyBase;
     }
+
 }
