@@ -22,6 +22,6 @@ public class SpiderInit {
 
     @PostConstruct
     public void initCrawler(){
-        requestCompanyDetailService.requestCompanyInfo();
+        requestCompanyDetailService.requestBaseInfo();
     }
 }
