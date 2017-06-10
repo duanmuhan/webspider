@@ -12,10 +12,10 @@
         <property name="testOnReturn" value="true"></property>
     </bean>
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" destroy-method="destroy">
-        <property name="hostName" value="118.193.233.119"></property>
+        <property name="hostName" value="127.0.0.1"></property>
         <property name="port" value="6379"></property>
         <property name="timeout" value="100"></property>
-        <property name="password" value="123456"></property>
+        <property name="password" value="000000"></property>
         <property name="usePool" value="true"></property>
         <property name="poolConfig" ref="jedisPoolConfig"></property>
     </bean>
