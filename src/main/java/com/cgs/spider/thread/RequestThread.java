@@ -5,7 +5,6 @@ package com.cgs.spider.thread;
  */
 public class RequestThread implements Runnable {
 
-
   @Override
   public void run() {
     try {

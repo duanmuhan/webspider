@@ -38,7 +38,7 @@ public class SpiderCrawlerService {
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse response = httpClient.execute(httpGet);
         HttpEntity entity = response.getEntity();
-        return EntityUtils.toString(entity,"gb2312");
+        return EntityUtils.toString(entity,WebAttributeConstant.COMPANY_PAGE_ENCODE);
     }
 
     public Map<String,String> getStockIdAndHrefMap(String url,String exchangeForShort) throws IOException {
@@ -66,10 +66,10 @@ public class SpiderCrawlerService {
     private Map<String,String> parseStockIdList(String content,String exchangeForShort){
         Map<String,String> stockIdAndHrefMap = new HashMap<>();
         Document document = Jsoup.parse(content);
-        Elements elements = document.getElementsByTag("li");
+        Elements elements = document.getElementsByTag(WebAttributeConstant.STOCKPAGE_LI);
         for (Element element : elements){
             if (element.toString().contains(exchangeForShort)){
-                String href = element.select("a").attr("href");
+                String href = element.select("a").attr(WebAttributeConstant.STOCKPAGE_HREF);
                 String[] strArray = href.split("/|.html");
                 for (int i=0; i<strArray.length; i++){
                     if (strArray[i].contains(exchangeForShort)){
@@ -85,9 +85,8 @@ public class SpiderCrawlerService {
         List<CompanyBase> companyBaseVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
-            if (document.getElementById(WebAttributeConstant.COMPANY_BASEID) != null &&
+            if (document.getElementById(WebAttributeConstant.COMPANY_BASE_ID) != null &&
                     document.getElementById(WebAttributeConstant.COMPANY_MAIN) != null){
-                String dataContent = document.getElementById(WebAttributeConstant.COMPANY_BASEID).text();
                 String mainContent = document.getElementById(WebAttributeConstant.COMPANY_MAIN).text();
                 Map<String,JSONArray> mainMap = (Map)JSONObject.parse(mainContent);
                 JSONArray jsonArray = mainMap.get("report");

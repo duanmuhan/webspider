@@ -8,6 +8,8 @@ import java.util.Date;
  */
 public class MarketValue {
 
+    private final static String FEILD_SPERATOR=",";
+
     private int stockId;
     private String stockName;
     private double open;

@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class CompanyBase {
 
-    private static String FIELD_SEPERATOR = ",";
+    private final static String FIELD_SEPERATOR = ",";
 
     private int stockId;
     private double perShareEarnings;
