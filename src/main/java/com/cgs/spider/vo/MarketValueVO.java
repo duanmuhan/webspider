@@ -1,5 +1,7 @@
 package com.cgs.spider.vo;
 
+import com.cgs.spider.entity.MarketValue;
+
 /**
  * Created by Administrator on 2017/5/29.
  */
@@ -283,5 +285,10 @@ public class MarketValueVO {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public MarketValue toMarketValue(){
+        MarketValue marketValue = new MarketValue();
+        return marketValue;
     }
 }
