@@ -278,4 +278,9 @@ public class MarketValue {
     public void setTime(Time time) {
         this.time = time;
     }
+
+    public String toRedisValue(){
+        String redisString = "";
+        return redisString;
+    }
 }
