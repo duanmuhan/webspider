@@ -15,8 +15,8 @@
   <!-- JOBS -->
   <bean id="requestDepositTimeJob"
     class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-    <property name="targetObject" ref="requestDepositTimeService"/>
-    <property name="targetMethod" value="requestDepositTime"/>
+    <property name="targetObject" ref="reqeustStockDataService"/>
+    <property name="targetMethod" value="requestStockData"/>
   </bean>
 
   <!--&lt;!&ndash; TRIGGERS &ndash;&gt;-->
