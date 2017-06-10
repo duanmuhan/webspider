@@ -1,5 +1,7 @@
 package com.cgs.spider.service;
 
+import java.io.IOException;
+import java.util.Map;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -8,15 +10,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/5/7.
  */
-@Service
+@Component
 public class ReqeustStockDataService {
 
     @Value("sina_prefix")

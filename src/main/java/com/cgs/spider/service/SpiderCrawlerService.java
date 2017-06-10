@@ -58,7 +58,7 @@ public class SpiderCrawlerService {
             CloseableHttpResponse response = httpClient.execute(httpGet);
             List<CompanyBase> companyBaseList = parseCompanyDetailList(key,EntityUtils.toString(response.getEntity(),"gb2312"));
             companyDetailMap.put(key,companyBaseList);
-            Thread.sleep(2000);
+            Thread.sleep(20);
         }
         return companyDetailMap;
     }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+  <!--&lt;!&ndash; JOBS &ndash;&gt;-->
+  <!--<bean id="requestDataJob"-->
+  <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+  <!--<property name="targetObject" ref="requestInfoService"/>-->
+  <!--<property name="targetMethod" value="requestData"/>-->
+  <!--</bean>-->
+
+  <!-- JOBS -->
+  <bean id="requestDepositTimeJob"
+    class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="reqeustStockDataService"/>
+    <property name="targetMethod" value="requestStockData"/>
+  </bean>
+
+  <!--&lt;!&ndash; TRIGGERS &ndash;&gt;-->
+  <!--<bean id="requestDepositTrigger"-->
+  <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+  <!--<property name="jobDetail" ref="requestDataJob"/>-->
+  <!--<property name="cronExpression" value="0 */30 * * * ?"/>-->
+  <!--</bean>-->
+
+  <bean id="requestDepositTimeTrigger"
+    class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="requestDepositTimeJob"/>
+    <property name="cronExpression" value="0 */1 * * * ?"/>
+  </bean>
+
+  <!-- scheduler -->
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="triggers">
+      <list>
+        <!--<ref bean="requestDepositTrigger"/>-->
+        <ref bean="requestDepositTimeTrigger"/>
+      </list>
+    </property>
+  </bean>
+
+</beans>

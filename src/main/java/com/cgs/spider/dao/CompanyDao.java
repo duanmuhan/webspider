@@ -1,5 +1,6 @@
 package com.cgs.spider.dao;
 
+import com.cgs.spider.constant.RedisKeys;
 import com.cgs.spider.entity.CompanyBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,7 +24,7 @@ public class CompanyDao {
             for (String key : baseInfoMap.keySet()){
                 List<CompanyBase> companyBaseList = baseInfoMap.get(key);
                 for (CompanyBase companyBase : companyBaseList){
-                    redisTemplate.opsForList().leftPush(key,companyBase.toRedisString());
+                    redisTemplate.opsForList().leftPush(RedisKeys.key(key),companyBase.toRedisString());
                 }
             }
         }

@@ -28,7 +28,7 @@ public class RequestCompanyDetailService {
         companyDao.saveCompanyInfo(companyMap);
     }
 
-    public Map<String,List<CompanyBase>> requestCompanyInfo(){
+    private Map<String,List<CompanyBase>> requestCompanyInfo(){
         Map<String,String> stockIdMap = initStockListService.getUrlMap();
         Map<String,List<CompanyBase>> companyDetailMap = new HashMap<>();
         try {
