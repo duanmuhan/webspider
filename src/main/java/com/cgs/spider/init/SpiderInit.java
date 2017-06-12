@@ -1,8 +1,8 @@
 package com.cgs.spider.init;
 
 
+import com.cgs.spider.service.CompanyDetailService;
 import com.cgs.spider.service.MarketValueService;
-import com.cgs.spider.service.RequestCompanyDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 public class SpiderInit {
 
     @Autowired
-    private RequestCompanyDetailService requestCompanyDetailService;
+    private CompanyDetailService requestCompanyDetailService;
     @Autowired
     private MarketValueService marketValueService;
 
