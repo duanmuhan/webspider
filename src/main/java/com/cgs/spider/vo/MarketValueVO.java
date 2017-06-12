@@ -37,8 +37,8 @@ public class MarketValueVO {
     private String sellThreeAmount;
     private String sellFour;
     private String sellFourAmount;
-    private String date;
-    private String time;
+    private Date date;
+    private Date time;
 
     public String getStockId() {
         return stockId;
@@ -272,19 +272,19 @@ public class MarketValueVO {
         this.sellFourAmount = sellFourAmount;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -319,7 +319,7 @@ public class MarketValueVO {
         marketValue.setLowest(Double.valueOf(this.getLowest()));
         marketValue.setSettlement(Double.valueOf(this.getSettlement()));
         marketValue.setSettlementAmount(Integer.valueOf(this.getSettlementAmount()));
-        marketValue.setDate(new Date(this.getDate()));
+        //marketValue.setDate(new Date(this.getDate()));
         //marketValue.setTime(new Time(this.getTime()));
         return marketValue;
     }
