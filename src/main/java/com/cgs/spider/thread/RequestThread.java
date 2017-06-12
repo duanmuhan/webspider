@@ -1,6 +1,7 @@
 package com.cgs.spider.thread;
 
 import com.cgs.spider.constant.Constant;
+import com.cgs.spider.dao.MarketValueDao;
 import com.cgs.spider.entity.MarketValue;
 import com.cgs.spider.message.AMQPClient;
 import java.util.List;
@@ -19,6 +20,8 @@ public class RequestThread implements Runnable {
 
   private List<String> stockIdList;
   private CloseableHttpClient httpClient = HttpClients.createDefault();
+  @Autowired
+  private MarketValueDao marketValueDao;
   @Autowired
   private AMQPClient amqpClient;
   @Autowired

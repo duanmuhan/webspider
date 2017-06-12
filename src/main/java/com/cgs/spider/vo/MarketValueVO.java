@@ -1,6 +1,7 @@
 package com.cgs.spider.vo;
 
 import com.cgs.spider.entity.MarketValue;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017/5/29.
@@ -289,6 +290,37 @@ public class MarketValueVO {
 
     public MarketValue toMarketValue(){
         MarketValue marketValue = new MarketValue();
+        marketValue.setStockId(Integer.valueOf(this.getStockId()));
+        marketValue.setBidOne(Integer.valueOf(this.getBidOne()));
+        marketValue.setBidSellOne(Integer.valueOf(this.getBidSellOne()));
+        marketValue.setBuyFive(Double.valueOf(this.getBuyFive()));
+        marketValue.setBuyFiveAmount(Integer.valueOf(this.getBuyFiveAmount()));
+        marketValue.setBuyFour(Double.valueOf(this.getBuyFour()));
+        marketValue.setBuyFourAmount(Integer.valueOf(this.getBuyFiveAmount()));
+        marketValue.setBuyThree(Double.valueOf(this.getBuyThree()));
+        marketValue.setBuyThreeAmount(Integer.valueOf(this.getBuyThreeAmount()));
+        marketValue.setBuyTwo(Double.valueOf(this.getBuyTwo()));
+        marketValue.setBuyTwoAmount(Integer.valueOf(this.getBuyTwoAmount()));
+        marketValue.setBuyOne(Double.valueOf(this.getBuyOne()));
+        marketValue.setBuyOneAmount(Integer.valueOf(this.getBuyOneAmount()));
+        marketValue.setSellFour(Double.valueOf(this.getSellFour()));
+        marketValue.setSellFourAmount(Integer.valueOf(this.getSellFourAmount()));
+        marketValue.setSellThree(Double.valueOf(this.getSellThree()));
+        marketValue.setSellThreeAmount(Integer.valueOf(this.getSellThreeAmount()));
+        marketValue.setSellTwo(Double.valueOf(this.getSellTwo()));
+        marketValue.setSellTwoAmount(Integer.valueOf(this.getSellThreeAmount()));
+        marketValue.setSellOne(Double.valueOf(this.getSellOne()));
+        marketValue.setSellOneAmount(Integer.valueOf(this.getSellOneAmount()));
+        marketValue.setCurrent(Double.valueOf(this.getCurrent()));
+        marketValue.setStockName(this.getStockName());
+        marketValue.setOpen(Double.valueOf(this.getOpen()));
+        marketValue.setPreClose(Double.valueOf(this.getPreClose()));
+        marketValue.setHighest(Double.valueOf(this.getHighest()));
+        marketValue.setLowest(Double.valueOf(this.getLowest()));
+        marketValue.setSettlement(Double.valueOf(this.getSettlement()));
+        marketValue.setSettlementAmount(Integer.valueOf(this.getSettlementAmount()));
+        marketValue.setDate(new Date(this.getDate()));
+        //marketValue.setTime(new Time(this.getTime()));
         return marketValue;
     }
 }

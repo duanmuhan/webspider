@@ -24,6 +24,7 @@ public class MarketValue {
     private double buyOne;
     private int buyOneAmount;
     private double buyTwo;
+    private int buyTwoAmount;
     private double buyThree;
     private int buyThreeAmount;
     private double buyFour;
@@ -279,6 +280,14 @@ public class MarketValue {
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    public int getBuyTwoAmount() {
+        return buyTwoAmount;
+    }
+
+    public void setBuyTwoAmount(int buyTwoAmount) {
+        this.buyTwoAmount = buyTwoAmount;
     }
 
     public String toRedisValue(){
