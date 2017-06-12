@@ -1,17 +1,15 @@
 package com.cgs.spider.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
+import com.cgs.spider.constant.RabbitKeys;
+import com.cgs.spider.constant.RedisKeys;
 import com.cgs.spider.constant.WebAttributeConstant;
+import com.cgs.spider.dao.MarketValueDao;
 import com.cgs.spider.entity.MarketValue;
 import com.cgs.spider.message.AMQPClient;
+import com.cgs.spider.service.cache.MarketValueCache;
 import com.cgs.spider.vo.MarketValueVO;
-import com.google.common.cache.CacheBuilder;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,6 +19,14 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/7.
@@ -35,16 +41,24 @@ public class StockDataService {
 
     private CloseableHttpClient httpClient = HttpClients.createDefault();
     private ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal();
-    private CacheBuilder<String,String> cacheBuilder;
     @Autowired
     private AMQPClient amqpClient;
+    @Autowired
+    private MarketValueDao marketValueDao;
+    @Autowired
+    private MarketValueCache marketValueCache;
 
     public void requestStockData(List<String> stockIdList){
         try {
             for (String stockId : stockIdList){
                 String url = Constant.MARKET_VALUE_URL + stockId;
                 String content = requestUrl(url);
-                parseMarketValue(content,stockId);
+                MarketValue marketValue = parseMarketValue(content,stockId);
+                String value = JSONObject.toJSONString(marketValue);
+                if (marketValueCache.putOrBack(String.valueOf(marketValue.getStockId()),value)){
+                    amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.name(),value);
+                    persistent(marketValue);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +74,7 @@ public class StockDataService {
 
     private MarketValue parseMarketValue(String content,String stockId){
         MarketValueVO marketValueVO = new MarketValueVO();
+        SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
         content = content.replace(PREFIX,"");
         List<String> fieldList = Arrays.asList(content.split(FIELD_SEPERATOR));
         marketValueVO.setStockId(stockId);
@@ -103,6 +118,12 @@ public class StockDataService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             threadLocal.set(simpleDateFormat);
             return simpleDateFormat;
+        }
+    }
+
+    private void persistent(MarketValue marketValue){
+        if (ObjectUtils.isEmpty(marketValue)){
+            marketValueDao.saveMarketValue(RedisKeys.marketValueKey(String.valueOf(marketValue.getStockId())),marketValue);
         }
     }
 

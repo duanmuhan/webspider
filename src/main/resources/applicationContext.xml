@@ -15,5 +15,5 @@
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
     <import resource="./redis/redis.xml"></import>
-    <import resource="./quartz/quartz.xml"></import>
+    <import resource="./activemq/activemq.xml"></import>
 </beans>
