@@ -5,7 +5,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <amq:connectionFactory id="amqConnectionFactory"
+  <amq:connectionFactory id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
     brokerURL="tcp://192.168.3.3:61616" userName="admin" password="admin"  />
 
   <!-- Spring Caching连接工厂 -->

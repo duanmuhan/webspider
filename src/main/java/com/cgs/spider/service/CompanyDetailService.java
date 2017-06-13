@@ -14,7 +14,7 @@ import java.util.Map;
  * Created by Administrator on 2017/5/8.
  */
 @Component
-public class RequestCompanyDetailService {
+public class CompanyDetailService {
 
     @Autowired
     private InitStockListService initStockListService;

@@ -1,26 +1,24 @@
 package com.cgs.spider.message;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import javax.print.attribute.standard.Destination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
+
+import javax.jms.TextMessage;
 
 @Component
 public class AMQPClient {
 
   @Autowired
   private JmsTemplate jmsTemplate;
-  @Autowired
-  private Destination destination;
 
-  public void sendMessage(String topic,String message){
-    try {
-      Destination queueDestination = new Destination(new URI(topic));
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+  public void sendMessage(String queueName,String message){
+    MessageCreator messageCreator = session -> {
+      TextMessage textMessage = session.createTextMessage(message);
+      return textMessage;
+    };
+    jmsTemplate.send(queueName,messageCreator);
   }
 
 }
