@@ -21,7 +21,9 @@ public class CompanyBase {
     private double netAssertValuePerShare;
     private double rateOfReturnOnCommonStockholders;
     private double netAssertYieldDiluted;
+    private double assetLiabilityRatio;
     private double capitalReversePerShare;
+    private double retainedEarnings;
     private double operationCashFlowPerShare;
     private double grossProfitMargin;
     private double inventoryTurnoverRatio;
@@ -170,6 +172,22 @@ public class CompanyBase {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public double getAssetLiabilityRatio() {
+        return assetLiabilityRatio;
+    }
+
+    public void setAssetLiabilityRatio(double assetLiabilityRatio) {
+        this.assetLiabilityRatio = assetLiabilityRatio;
+    }
+
+    public double getRetainedEarnings() {
+        return retainedEarnings;
+    }
+
+    public void setRetainedEarnings(double retainedEarnings) {
+        this.retainedEarnings = retainedEarnings;
     }
 
     public String toRedisString(){

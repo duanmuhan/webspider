@@ -1,6 +1,5 @@
 package com.cgs.spider.entity;
 
-import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -18,7 +17,7 @@ public class MarketValue {
     private double highest;
     private double lowest;
     private int bidOne;
-    private int bidSellOne;
+    private int bidAskOne;
     private double settlement;
     private int settlementAmount;
     private double buyOne;
@@ -31,16 +30,16 @@ public class MarketValue {
     private int buyFourAmount;
     private double buyFive;
     private int buyFiveAmount;
-    private double sellOne;
-    private int sellOneAmount;
-    private double sellTwo;
-    private int sellTwoAmount;
-    private double sellThree;
-    private int sellThreeAmount;
-    private double sellFour;
-    private int sellFourAmount;
+    private double askOne;
+    private int askOneAmount;
+    private double askTwo;
+    private int askTwoAmount;
+    private double askThree;
+    private int askThreeAmount;
+    private double askFour;
+    private int askFourAmount;
     private Date date;
-    private Time time;
+    private Date time;
 
     public int getStockId() {
         return stockId;
@@ -104,14 +103,6 @@ public class MarketValue {
 
     public void setBidOne(int bidOne) {
         this.bidOne = bidOne;
-    }
-
-    public int getBidSellOne() {
-        return bidSellOne;
-    }
-
-    public void setBidSellOne(int bidSellOne) {
-        this.bidSellOne = bidSellOne;
     }
 
     public double getSettlement() {
@@ -202,68 +193,76 @@ public class MarketValue {
         this.buyFiveAmount = buyFiveAmount;
     }
 
-    public double getSellOne() {
-        return sellOne;
+    public int getBidAskOne() {
+        return bidAskOne;
     }
 
-    public void setSellOne(double sellOne) {
-        this.sellOne = sellOne;
+    public void setBidAskOne(int bidAskOne) {
+        this.bidAskOne = bidAskOne;
     }
 
-    public int getSellOneAmount() {
-        return sellOneAmount;
+    public double getAskOne() {
+        return askOne;
     }
 
-    public void setSellOneAmount(int sellOneAmount) {
-        this.sellOneAmount = sellOneAmount;
+    public void setAskOne(double askOne) {
+        this.askOne = askOne;
     }
 
-    public double getSellTwo() {
-        return sellTwo;
+    public int getAskOneAmount() {
+        return askOneAmount;
     }
 
-    public void setSellTwo(double sellTwo) {
-        this.sellTwo = sellTwo;
+    public void setAskOneAmount(int askOneAmount) {
+        this.askOneAmount = askOneAmount;
     }
 
-    public int getSellTwoAmount() {
-        return sellTwoAmount;
+    public double getAskTwo() {
+        return askTwo;
     }
 
-    public void setSellTwoAmount(int sellTwoAmount) {
-        this.sellTwoAmount = sellTwoAmount;
+    public void setAskTwo(double askTwo) {
+        this.askTwo = askTwo;
     }
 
-    public double getSellThree() {
-        return sellThree;
+    public int getAskTwoAmount() {
+        return askTwoAmount;
     }
 
-    public void setSellThree(double sellThree) {
-        this.sellThree = sellThree;
+    public void setAskTwoAmount(int askTwoAmount) {
+        this.askTwoAmount = askTwoAmount;
     }
 
-    public int getSellThreeAmount() {
-        return sellThreeAmount;
+    public double getAskThree() {
+        return askThree;
     }
 
-    public void setSellThreeAmount(int sellThreeAmount) {
-        this.sellThreeAmount = sellThreeAmount;
+    public void setAskThree(double askThree) {
+        this.askThree = askThree;
     }
 
-    public double getSellFour() {
-        return sellFour;
+    public int getAskThreeAmount() {
+        return askThreeAmount;
     }
 
-    public void setSellFour(double sellFour) {
-        this.sellFour = sellFour;
+    public void setAskThreeAmount(int askThreeAmount) {
+        this.askThreeAmount = askThreeAmount;
     }
 
-    public int getSellFourAmount() {
-        return sellFourAmount;
+    public double getAskFour() {
+        return askFour;
     }
 
-    public void setSellFourAmount(int sellFourAmount) {
-        this.sellFourAmount = sellFourAmount;
+    public void setAskFour(double askFour) {
+        this.askFour = askFour;
+    }
+
+    public int getAskFourAmount() {
+        return askFourAmount;
+    }
+
+    public void setAskFourAmount(int askFourAmount) {
+        this.askFourAmount = askFourAmount;
     }
 
     public Date getDate() {
@@ -274,11 +273,11 @@ public class MarketValue {
         this.date = date;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
