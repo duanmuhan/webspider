@@ -1,5 +1,7 @@
 package com.cgs.spider.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,5 +17,11 @@ public class StockUrlDao {
     if (!ObjectUtils.isEmpty(key) && !ObjectUtils.isEmpty(value)){
       redisTemplate.opsForValue().set(key,value);
     }
+  }
+
+  public List<String> getStockUrl(String key){
+    List<String> stockLists = new ArrayList<>();
+    redisTemplate.opsForValue().get(key);
+    return stockLists;
   }
 }

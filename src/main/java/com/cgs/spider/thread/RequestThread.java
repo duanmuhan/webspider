@@ -20,8 +20,10 @@ public class RequestThread implements Runnable {
   @Override
   public void run() {
     try {
-      requestStockDataService.requestStockData(stockIdList);
-      Thread.sleep(10);
+      while (true){
+        requestStockDataService.requestStockData(stockIdList);
+        Thread.sleep(10);
+      }
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

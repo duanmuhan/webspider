@@ -2,7 +2,7 @@ package com.cgs.spider.constant;
 
 public enum RabbitKeys {
 
-    MARKET_VALUE("trendMin");
+    MARKET_VALUE("marketValue");
 
     private String context;
 
