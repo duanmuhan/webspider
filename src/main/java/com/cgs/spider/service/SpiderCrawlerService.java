@@ -90,7 +90,8 @@ public class SpiderCrawlerService {
                 String mainContent = document.getElementById(WebAttributeConstant.COMPANY_MAIN).text();
                 Map<String,JSONArray> mainMap = (Map)JSONObject.parse(mainContent);
                 JSONArray jsonArray = mainMap.get("report");
-                if (jsonArray.size() == 17){
+                //TODO 这个需要考虑下数组的长度
+                if (jsonArray.size() == 19 || jsonArray.size() == 17){
                     List<String> dateList = ((JSONArray)jsonArray.get(0)).toJavaList(String.class);
                     List<String> perShareEarningsList = ((JSONArray)jsonArray.get(1)).toJavaList(String.class);
                     List<String> retainedProfitsList = ((JSONArray)jsonArray.get(2)).toJavaList(String.class);

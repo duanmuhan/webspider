@@ -24,7 +24,12 @@ public class MarketValueService {
         int step = length / Constant.THREAD_NUM;
         for (int beginIndex = 0; beginIndex<length; beginIndex = beginIndex + step){
             int endIndex = beginIndex + step;
-            List<String> subList = stockList.subList(beginIndex,endIndex);
+            List<String> subList;
+            if (endIndex >= stockList.size()){
+                subList = stockList.subList(beginIndex,stockList.size() - 1);
+            }else {
+                subList = stockList.subList(beginIndex,endIndex);
+            }
             RequestThread requestThread = new RequestThread(subList);
             submit(requestThread);
         }
