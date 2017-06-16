@@ -2,7 +2,6 @@ package com.cgs.spider.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
-import com.cgs.spider.constant.RedisKeys;
 import com.cgs.spider.constant.WebAttributeConstant;
 import com.cgs.spider.dao.MarketValueDao;
 import com.cgs.spider.entity.MarketValue;
@@ -115,7 +114,7 @@ public class StockDataService {
 
     private void persistent(MarketValue marketValue){
         if (!ObjectUtils.isEmpty(marketValue)){
-            marketValueDao.saveMarketValue(RedisKeys.marketValueKey(String.valueOf(marketValue.getStockId())),marketValue);
+            marketValueDao.saveMarketValue(String.valueOf(marketValue.getStockId()),marketValue);
         }
     }
 }
