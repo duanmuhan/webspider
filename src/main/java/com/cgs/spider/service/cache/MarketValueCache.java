@@ -15,13 +15,13 @@ public class MarketValueCache {
     private Map<String,String> cache = new ConcurrentHashMap<>();
 
     public boolean putOrBack(String key,String value){
-        if (ObjectUtils.isEmpty(cache.get(key))){
-            return false;
+        if (ObjectUtils.isEmpty(cache.get(key)) || !cache.get(key).equals(value)){
+            cache.put(key,value);
+            return true;
         }
         if (cache.get(key).equals(value)){
             return false;
         }
-        cache.put(key,value);
         return true;
     }
 }

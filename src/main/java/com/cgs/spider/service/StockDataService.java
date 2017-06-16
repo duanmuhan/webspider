@@ -9,10 +9,10 @@ import com.cgs.spider.entity.MarketValue;
 import com.cgs.spider.service.cache.MarketValueCache;
 import com.cgs.spider.vo.MarketValueVO;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -38,8 +38,6 @@ public class StockDataService {
 
     private CloseableHttpClient httpClient = HttpClients.createDefault();
     private ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal();
-//    @Autowired
-//    private AMQPClient amqpClient;
     @Autowired
     private MarketValueDao marketValueDao;
     @Autowired
@@ -57,7 +55,7 @@ public class StockDataService {
                     persistent(marketValue);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -69,9 +67,8 @@ public class StockDataService {
         return EntityUtils.toString(entity, WebAttributeConstant.COMPANY_PAGE_ENCODE);
     }
 
-    private MarketValue parseMarketValue(String content,String stockId){
+    private MarketValue parseMarketValue(String content,String stockId) throws ParseException {
         MarketValueVO marketValueVO = new MarketValueVO();
-        SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
         content = content.replace(PREFIX,"");
         List<String> fieldList = Arrays.asList(content.split(FIELD_SEPERATOR));
         marketValueVO.setStockId(stockId);
@@ -82,9 +79,9 @@ public class StockDataService {
         marketValueVO.setHighest(fieldList.get(4));
         marketValueVO.setLowest(fieldList.get(5));
         marketValueVO.setBidOne(fieldList.get(6));
-        marketValueVO.setSellOne(fieldList.get(7));
-        marketValueVO.setSettlement(fieldList.get(8));
-        marketValueVO.setSettlementAmount(fieldList.get(9));
+        marketValueVO.setBidSellOne(fieldList.get(7));
+        marketValueVO.setSettlementAmount(fieldList.get(8));
+        marketValueVO.setSettlement(fieldList.get(9));
         marketValueVO.setBuyOneAmount(fieldList.get(10));
         marketValueVO.setBuyOne(fieldList.get(11));
         marketValueVO.setBuyTwoAmount(fieldList.get(12));
@@ -93,8 +90,8 @@ public class StockDataService {
         marketValueVO.setBuyThree(fieldList.get(15));
         marketValueVO.setBuyFourAmount(fieldList.get(16));
         marketValueVO.setBuyFour(fieldList.get(17));
-        marketValueVO.setBuyFive(fieldList.get(18));
-        marketValueVO.setBuyFiveAmount(fieldList.get(19));
+        marketValueVO.setBuyFiveAmount(fieldList.get(18));
+        marketValueVO.setBuyFive(fieldList.get(19));
         marketValueVO.setSellOneAmount(fieldList.get(20));
         marketValueVO.setSellOne(fieldList.get(21));
         marketValueVO.setSellTwoAmount(fieldList.get(22));
@@ -103,8 +100,10 @@ public class StockDataService {
         marketValueVO.setSellThree(fieldList.get(25));
         marketValueVO.setSellFourAmount(fieldList.get(26));
         marketValueVO.setSellFour(fieldList.get(27));
-        marketValueVO.setDate(new Date(fieldList.get(28)));
-        //marketValueVO.setTime(fieldList.get(29));
+        StringBuilder sb = new StringBuilder();
+        sb.append(fieldList.get(30) + " " + fieldList.get(31));
+        SimpleDateFormat sdf = getSimpleDateFormat();
+        marketValueVO.setTime(sdf.parse(sb.toString()));
         return marketValueVO.toMarketValue();
     }
 
@@ -112,14 +111,14 @@ public class StockDataService {
         if (threadLocal.get() != null){
             return threadLocal.get();
         }else {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             threadLocal.set(simpleDateFormat);
             return simpleDateFormat;
         }
     }
 
     private void persistent(MarketValue marketValue){
-        if (ObjectUtils.isEmpty(marketValue)){
+        if (!ObjectUtils.isEmpty(marketValue)){
             marketValueDao.saveMarketValue(RedisKeys.marketValueKey(String.valueOf(marketValue.getStockId())),marketValue);
         }
     }

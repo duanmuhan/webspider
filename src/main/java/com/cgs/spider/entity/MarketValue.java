@@ -1,7 +1,5 @@
 package com.cgs.spider.entity;
 
-import java.util.Date;
-
 /**
  * Created by Administrator on 2017/5/29.
  */
@@ -9,15 +7,15 @@ public class MarketValue {
 
     private final static String FEILD_SPERATOR=",";
 
-    private int stockId;
+    private String stockId;
     private String stockName;
     private double open;
     private double preClose;
     private double current;
     private double highest;
     private double lowest;
-    private int bidOne;
-    private int bidAskOne;
+    private double bidOne;
+    private double bidAskOne;
     private double settlement;
     private int settlementAmount;
     private double buyOne;
@@ -38,14 +36,13 @@ public class MarketValue {
     private int askThreeAmount;
     private double askFour;
     private int askFourAmount;
-    private Date date;
-    private Date time;
+    private long timestamp;
 
-    public int getStockId() {
+    public String getStockId() {
         return stockId;
     }
 
-    public void setStockId(int stockId) {
+    public void setStockId(String stockId) {
         this.stockId = stockId;
     }
 
@@ -97,11 +94,11 @@ public class MarketValue {
         this.lowest = lowest;
     }
 
-    public int getBidOne() {
+    public double getBidOne() {
         return bidOne;
     }
 
-    public void setBidOne(int bidOne) {
+    public void setBidOne(double bidOne) {
         this.bidOne = bidOne;
     }
 
@@ -193,7 +190,7 @@ public class MarketValue {
         this.buyFiveAmount = buyFiveAmount;
     }
 
-    public int getBidAskOne() {
+    public double getBidAskOne() {
         return bidAskOne;
     }
 
@@ -265,20 +262,12 @@ public class MarketValue {
         this.askFourAmount = askFourAmount;
     }
 
-    public Date getDate() {
-        return date;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getBuyTwoAmount() {

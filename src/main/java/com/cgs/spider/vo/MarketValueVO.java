@@ -37,8 +37,7 @@ public class MarketValueVO {
     private String sellThreeAmount;
     private String sellFour;
     private String sellFourAmount;
-    private Date date;
-    private Date time;
+    Date time;
 
     public String getStockId() {
         return stockId;
@@ -272,14 +271,6 @@ public class MarketValueVO {
         this.sellFourAmount = sellFourAmount;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Date getTime() {
         return time;
     }
@@ -290,9 +281,9 @@ public class MarketValueVO {
 
     public MarketValue toMarketValue(){
         MarketValue marketValue = new MarketValue();
-        marketValue.setStockId(Integer.valueOf(this.getStockId()));
-        marketValue.setBidOne(Integer.valueOf(this.getBidOne()));
-        marketValue.setAskOne(Integer.valueOf(this.getBidSellOne()));
+        marketValue.setStockId(this.getStockId());
+        marketValue.setBidOne(Double.valueOf(this.getBidOne()));
+        marketValue.setAskOne(Double.valueOf(this.getBidSellOne()));
         marketValue.setBuyFive(Double.valueOf(this.getBuyFive()));
         marketValue.setBuyFiveAmount(Integer.valueOf(this.getBuyFiveAmount()));
         marketValue.setBuyFour(Double.valueOf(this.getBuyFour()));
@@ -319,8 +310,7 @@ public class MarketValueVO {
         marketValue.setLowest(Double.valueOf(this.getLowest()));
         marketValue.setSettlement(Double.valueOf(this.getSettlement()));
         marketValue.setSettlementAmount(Integer.valueOf(this.getSettlementAmount()));
-        //marketValue.setDate(new Date(this.getDate()));
-        //marketValue.setTime(new Time(this.getTime()));
+        marketValue.setTimestamp(this.getTime().getTime());
         return marketValue;
     }
 }

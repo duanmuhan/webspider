@@ -21,7 +21,7 @@ public class SpiderInit {
 
     @PostConstruct
     public void initCrawler(){
-        requestCompanyDetailService.requestBaseInfo();
+//        requestCompanyDetailService.requestBaseInfo();
         marketValueService.execute();
     }
 }

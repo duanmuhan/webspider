@@ -16,6 +16,6 @@ public class MarketValueDao {
   private RedisTemplate<String,String> redisTemplate;
 
   public void saveMarketValue(String stockId,MarketValue marketValue){
-    redisTemplate.opsForValue().set(RedisKeys.marketValueKey(stockId),marketValue.toString());
+    redisTemplate.opsForValue().set(RedisKeys.marketValueKey(stockId),marketValue.toRedisValue());
   }
 }
