@@ -284,6 +284,7 @@ public class MarketValueVO {
         marketValue.setStockId(this.getStockId());
         marketValue.setBidOne(Double.valueOf(this.getBidOne()));
         marketValue.setAskOne(Double.valueOf(this.getBidSellOne()));
+        marketValue.setBidAskOne(Double.valueOf(this.getBidSellOne()));
         marketValue.setBuyFive(Double.valueOf(this.getBuyFive()));
         marketValue.setBuyFiveAmount(Integer.valueOf(this.getBuyFiveAmount()));
         marketValue.setBuyFour(Double.valueOf(this.getBuyFour()));

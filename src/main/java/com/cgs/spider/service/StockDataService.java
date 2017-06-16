@@ -11,7 +11,6 @@ import com.cgs.spider.vo.MarketValueVO;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.http.HttpEntity;
@@ -21,7 +20,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
@@ -31,8 +29,6 @@ import org.springframework.util.ObjectUtils;
 @Component
 public class StockDataService {
 
-    @Value("sina_prefix")
-    private String prefix;
     private static final String PREFIX = "var hq_str_sh601106=";
     private static final String FIELD_SEPERATOR = ",";
 
@@ -121,12 +117,5 @@ public class StockDataService {
         if (!ObjectUtils.isEmpty(marketValue)){
             marketValueDao.saveMarketValue(RedisKeys.marketValueKey(String.valueOf(marketValue.getStockId())),marketValue);
         }
-    }
-
-    public static void main(String[] args) {
-        List<String> stockList = new ArrayList<>();
-        stockList.add("sh601106");
-        StockDataService dataService = new StockDataService();
-        dataService.requestStockData(stockList);
     }
 }

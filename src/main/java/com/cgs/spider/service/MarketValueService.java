@@ -2,7 +2,6 @@ package com.cgs.spider.service;
 
 import com.cgs.spider.constant.Constant;
 import com.cgs.spider.thread.RequestThread;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,10 +21,7 @@ public class MarketValueService {
     private ExecutorService executorService = Executors.newFixedThreadPool(Constant.THREAD_NUM);
 
     public void execute(){
-        //List<String> stockList = initStockListService.getStockList();
-        List<String> stockList = new ArrayList<>();
-        stockList.add("sh601106");
-        stockList.add("sh601107");
+        List<String> stockList = initStockListService.getStockList();
         int length = stockList.size();
         int step = length / Constant.THREAD_NUM;
         if (step == 0){
