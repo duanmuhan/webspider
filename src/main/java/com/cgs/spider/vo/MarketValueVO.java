@@ -300,7 +300,7 @@ public class MarketValueVO {
         marketValue.setAskThree(Double.valueOf(this.getSellThree()));
         marketValue.setAskThreeAmount(Integer.valueOf(this.getSellThreeAmount()));
         marketValue.setAskTwo(Double.valueOf(this.getSellTwo()));
-        marketValue.setAskTwoAmount(Integer.valueOf(this.getSellThreeAmount()));
+        marketValue.setAskTwoAmount(Integer.valueOf(this.getSellTwoAmount()));
         marketValue.setAskOne(Double.valueOf(this.getSellOne()));
         marketValue.setAskOneAmount(Integer.valueOf(this.getSellOneAmount()));
         marketValue.setCurrent(Double.valueOf(this.getCurrent()));
