@@ -73,7 +73,7 @@ public class SpiderCrawlerService {
                 String[] strArray = href.split("/|.html");
                 for (int i=0; i<strArray.length; i++){
                     if (strArray[i].contains(exchangeForShort)){
-                        stockIdAndHrefMap.put(strArray[i].replace(exchangeForShort,""),href);
+                        stockIdAndHrefMap.put(strArray[i],href);
                     }
                 }
             }

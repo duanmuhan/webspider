@@ -5,7 +5,7 @@ package com.cgs.spider.entity;
  */
 public class MarketValue {
 
-    private final static String FEILD_SPERATOR=",";
+    private final static String FIELD_SPERATOR=",";
 
     private String stockId;
     private String stockName;
@@ -280,36 +280,36 @@ public class MarketValue {
 
     public String toRedisValue(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getStockId()).append(FEILD_SPERATOR);
-        sb.append(this.getStockName()).append(FEILD_SPERATOR);
-        sb.append(this.getOpen()).append(FEILD_SPERATOR);
-        sb.append(this.getOpen()).append(FEILD_SPERATOR);
-        sb.append(this.getPreClose()).append(FEILD_SPERATOR);
-        sb.append(this.getCurrent()).append(FEILD_SPERATOR);
-        sb.append(this.getHighest()).append(FEILD_SPERATOR);
-        sb.append(this.getLowest()).append(FEILD_SPERATOR);
-        sb.append(this.getBidOne()).append(FEILD_SPERATOR);
-        sb.append(this.getBidAskOne()).append(FEILD_SPERATOR);
-        sb.append(this.getSettlement()).append(FEILD_SPERATOR);
-        sb.append(this.getSettlementAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyOne()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyOneAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyTwo()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyTwoAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyThree()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyThreeAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyFour()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyFourAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyFive()).append(FEILD_SPERATOR);
-        sb.append(this.getBuyFiveAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getAskOne()).append(FEILD_SPERATOR);
-        sb.append(this.getAskOneAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getAskTwo()).append(FEILD_SPERATOR);
-        sb.append(this.getAskTwoAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getAskThree()).append(FEILD_SPERATOR);
-        sb.append(this.getAskThreeAmount()).append(FEILD_SPERATOR);
-        sb.append(this.getAskFour()).append(FEILD_SPERATOR);
-        sb.append(this.getAskFourAmount()).append(FEILD_SPERATOR);
+        sb.append(this.getStockId()).append(FIELD_SPERATOR);
+        sb.append(this.getStockName()).append(FIELD_SPERATOR);
+        sb.append(this.getOpen()).append(FIELD_SPERATOR);
+        sb.append(this.getOpen()).append(FIELD_SPERATOR);
+        sb.append(this.getPreClose()).append(FIELD_SPERATOR);
+        sb.append(this.getCurrent()).append(FIELD_SPERATOR);
+        sb.append(this.getHighest()).append(FIELD_SPERATOR);
+        sb.append(this.getLowest()).append(FIELD_SPERATOR);
+        sb.append(this.getBidOne()).append(FIELD_SPERATOR);
+        sb.append(this.getBidAskOne()).append(FIELD_SPERATOR);
+        sb.append(this.getSettlement()).append(FIELD_SPERATOR);
+        sb.append(this.getSettlementAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyOne()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyOneAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyTwo()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyTwoAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyThree()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyThreeAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyFour()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyFourAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyFive()).append(FIELD_SPERATOR);
+        sb.append(this.getBuyFiveAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getAskOne()).append(FIELD_SPERATOR);
+        sb.append(this.getAskOneAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getAskTwo()).append(FIELD_SPERATOR);
+        sb.append(this.getAskTwoAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getAskThree()).append(FIELD_SPERATOR);
+        sb.append(this.getAskThreeAmount()).append(FIELD_SPERATOR);
+        sb.append(this.getAskFour()).append(FIELD_SPERATOR);
+        sb.append(this.getAskFourAmount()).append(FIELD_SPERATOR);
         sb.append(this.getTimestamp());
         return sb.toString();
     }

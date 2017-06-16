@@ -52,7 +52,7 @@ public class MarketValueVO {
     }
 
     public void setStockName(String stockName) {
-        this.stockName = stockName;
+        this.stockName = stockName.substring(19,stockName.length());
     }
 
     public String getOpen() {
@@ -288,7 +288,7 @@ public class MarketValueVO {
         marketValue.setBuyFive(Double.valueOf(this.getBuyFive()));
         marketValue.setBuyFiveAmount(Integer.valueOf(this.getBuyFiveAmount()));
         marketValue.setBuyFour(Double.valueOf(this.getBuyFour()));
-        marketValue.setBuyFourAmount(Integer.valueOf(this.getBuyFiveAmount()));
+        marketValue.setBuyFourAmount(Integer.valueOf(this.getBuyFourAmount()));
         marketValue.setBuyThree(Double.valueOf(this.getBuyThree()));
         marketValue.setBuyThreeAmount(Integer.valueOf(this.getBuyThreeAmount()));
         marketValue.setBuyTwo(Double.valueOf(this.getBuyTwo()));

@@ -29,7 +29,7 @@ import org.springframework.util.ObjectUtils;
 @Component
 public class StockDataService {
 
-    private static final String PREFIX = "var hq_str_sh601106=";
+    private static final String PREFIX = "var hq_str_.*=";
     private static final String FIELD_SEPERATOR = ",";
 
     private CloseableHttpClient httpClient = HttpClients.createDefault();
