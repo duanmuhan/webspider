@@ -17,7 +17,7 @@ public class MarketValue {
     private double bidOne;
     private double bidAskOne;
     private double settlement;
-    private int settlementAmount;
+    private long settlementAmount;
     private double buyOne;
     private int buyOneAmount;
     private double buyTwo;
@@ -110,11 +110,11 @@ public class MarketValue {
         this.settlement = settlement;
     }
 
-    public int getSettlementAmount() {
+    public long getSettlementAmount() {
         return settlementAmount;
     }
 
-    public void setSettlementAmount(int settlementAmount) {
+    public void setSettlementAmount(long settlementAmount) {
         this.settlementAmount = settlementAmount;
     }
 
