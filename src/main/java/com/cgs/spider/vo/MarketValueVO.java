@@ -52,7 +52,7 @@ public class MarketValueVO {
     }
 
     public void setStockName(String stockName) {
-        this.stockName = stockName.substring(19,stockName.length());
+        this.stockName = stockName.substring(21,stockName.length());
     }
 
     public String getOpen() {
