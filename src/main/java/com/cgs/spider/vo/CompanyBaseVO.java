@@ -1,6 +1,7 @@
 package com.cgs.spider.vo;
 
 import com.cgs.spider.entity.CompanyBase;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017/5/29.
@@ -27,7 +28,7 @@ public class CompanyBaseVO {
     private String grossProfitMargin;
     private String inventoryTurnoverRatio;
     private String netProfitMarginOnSales;
-    private String date;
+    private Date date;
 
     public String getStockId() {
         return stockId;
@@ -229,11 +230,11 @@ public class CompanyBaseVO {
         this.netProfitMarginOnSales = netProfitMarginOnSales;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -257,6 +258,7 @@ public class CompanyBaseVO {
         companyBase.setGrossProfitMargin(Double.valueOf(this.getGrossProfitMargin()));
         companyBase.setInventoryTurnoverRatio(Double.valueOf(this.getInventoryTurnoverRatio()));
         companyBase.setNetProfitMarginOnSales(Double.valueOf(this.getNetProfitMarginOnSales()));
+        companyBase.setDate(this.getDate());
         return companyBase;
     }
 

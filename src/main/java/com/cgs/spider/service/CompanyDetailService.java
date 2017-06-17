@@ -2,13 +2,11 @@ package com.cgs.spider.service;
 
 import com.cgs.spider.dao.CompanyDao;
 import com.cgs.spider.entity.CompanyBase;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/5/8.
@@ -33,9 +31,7 @@ public class CompanyDetailService {
         Map<String,List<CompanyBase>> companyDetailMap = new HashMap<>();
         try {
             companyDetailMap = spiderCrawlerService.getCompanyDetailList(stockIdMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return companyDetailMap;

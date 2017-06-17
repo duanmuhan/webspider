@@ -44,10 +44,12 @@ public class StockDataService {
                 String url = Constant.MARKET_VALUE_URL + stockId;
                 String content = requestUrl(url);
                 MarketValue marketValue = parseMarketValue(content,stockId);
-                String value = JSONObject.toJSONString(marketValue);
-                if (marketValueCache.putOrBack(String.valueOf(marketValue.getStockId()),value)){
-                    //amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.name(),value);
-                    persistent(marketValue);
+                if (!ObjectUtils.isEmpty(marketValue)){
+                    String value = JSONObject.toJSONString(marketValue);
+                    if (marketValueCache.putOrBack(String.valueOf(marketValue.getStockId()),value)){
+                        //amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.name(),value);
+                        persistent(marketValue);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -66,6 +68,9 @@ public class StockDataService {
         MarketValueVO marketValueVO = new MarketValueVO();
         content = content.replace(PREFIX,"");
         List<String> fieldList = Arrays.asList(content.split(FIELD_SEPERATOR));
+        if (fieldList.size()< 2){
+            return null;
+        }
         marketValueVO.setStockId(stockId);
         marketValueVO.setStockName(fieldList.get(0));
         marketValueVO.setOpen(fieldList.get(1));

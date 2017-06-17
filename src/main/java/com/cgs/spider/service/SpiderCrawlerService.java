@@ -6,6 +6,8 @@ import com.cgs.spider.constant.Constant;
 import com.cgs.spider.constant.WebAttributeConstant;
 import com.cgs.spider.entity.CompanyBase;
 import com.cgs.spider.vo.CompanyBaseVO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -33,6 +35,7 @@ public class SpiderCrawlerService {
 
     private Logger logger = LoggerFactory.getLogger(SpiderCrawlerService.class);
     private  CloseableHttpClient httpClient = HttpClients.createDefault();
+    private ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal();
 
     private String requestUrl(String url) throws IOException {
         HttpGet httpGet = new HttpGet(url);
@@ -50,7 +53,8 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    public Map<String,List<CompanyBase>> getCompanyDetailList(Map<String,String> stockMap) throws IOException, InterruptedException {
+    public Map<String,List<CompanyBase>> getCompanyDetailList(Map<String,String> stockMap)
+        throws IOException, InterruptedException, ParseException {
         Map<String,List<CompanyBase>> companyDetailMap = new HashMap<>();
         for (String key : stockMap.keySet()){
             String url = Constant. COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
@@ -81,10 +85,12 @@ public class SpiderCrawlerService {
         return stockIdAndHrefMap;
     }
 
-    private List<CompanyBase> parseCompanyDetailList(String key, String content){
+    private List<CompanyBase> parseCompanyDetailList(String key, String content)
+        throws ParseException {
         List<CompanyBase> companyBaseVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
+            SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
             if (document.getElementById(WebAttributeConstant.COMPANY_BASE_ID) != null &&
                     document.getElementById(WebAttributeConstant.COMPANY_MAIN) != null){
                 String mainContent = document.getElementById(WebAttributeConstant.COMPANY_MAIN).text();
@@ -112,7 +118,7 @@ public class SpiderCrawlerService {
                     for (int i=0; i<dateList.size(); i++){
                         CompanyBaseVO companyBaseVO = new CompanyBaseVO();
                         companyBaseVO.setStockId(key);
-                        companyBaseVO.setDate(dateList.get(i));
+                        companyBaseVO.setDate(simpleDateFormat.parse(dateList.get(i)));
                         companyBaseVO.setPerShareEarnings(perShareEarningsList.get(i));
                         companyBaseVO.setRetainedProfits(retainedProfitsList.get(i));
                         companyBaseVO.setIncreaseInRetainedProfits(increaseInRetainedProfitsList.get(i));
@@ -136,5 +142,15 @@ public class SpiderCrawlerService {
             }
         }
         return companyBaseVOList;
+    }
+
+    private SimpleDateFormat getSimpleDateFormat(){
+        if (threadLocal.get() != null){
+            return threadLocal.get();
+        }else {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            threadLocal.set(simpleDateFormat);
+            return simpleDateFormat;
+        }
     }
 }

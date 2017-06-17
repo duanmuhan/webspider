@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SpiderLauncher {
 
     public static void main(String[] args){
+
         String path = "applicationContext.xml";
         try {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(path);
