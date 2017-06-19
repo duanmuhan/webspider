@@ -310,7 +310,7 @@ public class MarketValueVO {
         marketValue.setHighest(Double.valueOf(this.getHighest()));
         marketValue.setLowest(Double.valueOf(this.getLowest()));
         marketValue.setSettlement(Double.valueOf(this.getSettlement()));
-        marketValue.setSettlementAmount(Integer.valueOf(this.getSettlementAmount()));
+        marketValue.setSettlementAmount(Long.valueOf(this.getSettlementAmount()));
         marketValue.setTimestamp(this.getTime().getTime());
         return marketValue;
     }
