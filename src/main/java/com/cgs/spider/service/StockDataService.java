@@ -2,9 +2,11 @@ package com.cgs.spider.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
+import com.cgs.spider.constant.RabbitKeys;
 import com.cgs.spider.constant.WebAttributeConstant;
 import com.cgs.spider.dao.MarketValueDao;
 import com.cgs.spider.entity.MarketValue;
+import com.cgs.spider.message.AMQPClient;
 import com.cgs.spider.service.cache.MarketValueCache;
 import com.cgs.spider.vo.MarketValueVO;
 import java.io.IOException;
@@ -34,6 +36,8 @@ public class StockDataService {
     private CloseableHttpClient httpClient = HttpClients.createDefault();
     private ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal();
     @Autowired
+    private AMQPClient amqpClient;
+    @Autowired
     private MarketValueDao marketValueDao;
     @Autowired
     private MarketValueCache marketValueCache;
@@ -47,7 +51,7 @@ public class StockDataService {
                 if (!ObjectUtils.isEmpty(marketValue)){
                     String value = JSONObject.toJSONString(marketValue);
                     if (marketValueCache.putOrBack(String.valueOf(marketValue.getStockId()),value)){
-                        //amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.name(),value);
+                        amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.getContext(),value);
                         persistent(marketValue);
                     }
                 }
