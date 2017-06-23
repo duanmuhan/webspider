@@ -15,6 +15,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
@@ -29,6 +31,7 @@ import java.util.List;
  * Created by Administrator on 2017/5/7.
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class StockDataService {
 
     private static final String PREFIX = "var hq_str_.*=";
