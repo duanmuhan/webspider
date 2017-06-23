@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class MarketValueCache {
 
-    private Map<String,String> cache = new ConcurrentHashMap<>();
+    private static Map<String,String> cache = new ConcurrentHashMap<>();
 
     public boolean putOrBack(String key,String value){
         if (ObjectUtils.isEmpty(cache.get(key)) || !cache.get(key).equals(value)){

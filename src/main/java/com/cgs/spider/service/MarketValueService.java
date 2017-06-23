@@ -2,11 +2,12 @@ package com.cgs.spider.service;
 
 import com.cgs.spider.constant.Constant;
 import com.cgs.spider.thread.RequestThread;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by Administrator on 2017/6/9.

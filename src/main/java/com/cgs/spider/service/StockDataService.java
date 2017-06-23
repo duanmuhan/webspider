@@ -2,16 +2,13 @@ package com.cgs.spider.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cgs.spider.constant.Constant;
+import com.cgs.spider.constant.RabbitKeys;
 import com.cgs.spider.constant.WebAttributeConstant;
 import com.cgs.spider.dao.MarketValueDao;
 import com.cgs.spider.entity.MarketValue;
+import com.cgs.spider.message.AMQPClient;
 import com.cgs.spider.service.cache.MarketValueCache;
 import com.cgs.spider.vo.MarketValueVO;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,6 +18,12 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/7.
@@ -37,6 +40,8 @@ public class StockDataService {
     private MarketValueDao marketValueDao;
     @Autowired
     private MarketValueCache marketValueCache;
+    @Autowired
+    private AMQPClient amqpClient;
 
     public void requestStockData(List<String> stockIdList){
         try {
@@ -47,7 +52,7 @@ public class StockDataService {
                 if (!ObjectUtils.isEmpty(marketValue)){
                     String value = JSONObject.toJSONString(marketValue);
                     if (marketValueCache.putOrBack(String.valueOf(marketValue.getStockId()),value)){
-                        //amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.name(),value);
+                        amqpClient.sendMessage(RabbitKeys.MARKET_VALUE.name(),value);
                         persistent(marketValue);
                     }
                 }
