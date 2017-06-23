@@ -6,8 +6,6 @@ import com.cgs.spider.constant.Constant;
 import com.cgs.spider.constant.WebAttributeConstant;
 import com.cgs.spider.entity.CompanyBase;
 import com.cgs.spider.vo.CompanyBaseVO;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -25,6 +23,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +58,7 @@ public class SpiderCrawlerService {
         throws IOException, InterruptedException, ParseException {
         Map<String,List<CompanyBase>> companyDetailMap = new HashMap<>();
         for (String key : stockMap.keySet()){
+            key = key.substring(2,key.length());
             String url = Constant. COMPANY_BAOBIAO_URL_PREFIX + key + Constant.COMPANY_BAOBIAO_URL_POSTFIX;
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpGet);
@@ -86,7 +88,7 @@ public class SpiderCrawlerService {
     }
 
     private List<CompanyBase> parseCompanyDetailList(String key, String content)
-        throws ParseException {
+            throws ParseException, UnsupportedEncodingException {
         List<CompanyBase> companyBaseVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(content)){
             Document document = Jsoup.parse(content);
@@ -97,7 +99,7 @@ public class SpiderCrawlerService {
                 Map<String,JSONArray> mainMap = (Map)JSONObject.parse(mainContent);
                 JSONArray jsonArray = mainMap.get("report");
                 //TODO 这个需要考虑下数组的长度
-                if (jsonArray.size() == 19 || jsonArray.size() == 17){
+                if (jsonArray.size() > 16){
                     List<String> dateList = ((JSONArray)jsonArray.get(0)).toJavaList(String.class);
                     List<String> perShareEarningsList = ((JSONArray)jsonArray.get(1)).toJavaList(String.class);
                     List<String> retainedProfitsList = ((JSONArray)jsonArray.get(2)).toJavaList(String.class);
@@ -118,7 +120,9 @@ public class SpiderCrawlerService {
                     for (int i=0; i<dateList.size(); i++){
                         CompanyBaseVO companyBaseVO = new CompanyBaseVO();
                         companyBaseVO.setStockId(key);
-                        companyBaseVO.setDate(simpleDateFormat.parse(dateList.get(i)));
+                        if (!ObjectUtils.isEmpty(dateList.get(i))){
+                            companyBaseVO.setDate(simpleDateFormat.parse(dateList.get(i)));
+                        }
                         companyBaseVO.setPerShareEarnings(perShareEarningsList.get(i));
                         companyBaseVO.setRetainedProfits(retainedProfitsList.get(i));
                         companyBaseVO.setIncreaseInRetainedProfits(increaseInRetainedProfitsList.get(i));

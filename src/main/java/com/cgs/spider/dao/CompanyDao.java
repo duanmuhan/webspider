@@ -2,11 +2,11 @@ package com.cgs.spider.dao;
 
 import com.cgs.spider.constant.RedisKeys;
 import com.cgs.spider.entity.CompanyBase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 @Repository
 public class CompanyDao {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String,String> redisTemplate;
 
     public void saveCompanyInfo(Map<String,List<CompanyBase>> baseInfoMap){
@@ -24,6 +24,7 @@ public class CompanyDao {
             for (String key : baseInfoMap.keySet()){
                 List<CompanyBase> companyBaseList = baseInfoMap.get(key);
                 for (CompanyBase companyBase : companyBaseList){
+                    redisTemplate.delete(RedisKeys.key(key));
                     redisTemplate.opsForList().leftPush(RedisKeys.key(key),companyBase.toRedisString());
                 }
             }

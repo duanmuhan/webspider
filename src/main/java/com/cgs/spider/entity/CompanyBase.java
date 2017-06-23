@@ -9,7 +9,7 @@ public class CompanyBase {
 
     private final static String FIELD_SEPERATOR = ",";
 
-    private int stockId;
+    private String stockId;
     private double perShareEarnings;
     private double retainedProfits;
     private double increaseInRetainedProfits;
@@ -30,11 +30,11 @@ public class CompanyBase {
     private double netProfitMarginOnSales;
     private Date date;
 
-    public int getStockId() {
+    public String getStockId() {
         return stockId;
     }
 
-    public void setStockId(int stockId) {
+    public void setStockId(String stockId) {
         this.stockId = stockId;
     }
 

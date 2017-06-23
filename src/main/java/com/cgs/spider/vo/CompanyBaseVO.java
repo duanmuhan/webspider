@@ -1,6 +1,8 @@
 package com.cgs.spider.vo;
 
 import com.cgs.spider.entity.CompanyBase;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -238,9 +240,9 @@ public class CompanyBaseVO {
         this.date = date;
     }
 
-    public CompanyBase toCompanyBase(){
+    public CompanyBase toCompanyBase() throws UnsupportedEncodingException {
         CompanyBase companyBase = new CompanyBase();
-        companyBase.setStockId(Integer.valueOf(this.getStockId()));
+        companyBase.setStockId(new String(this.getStockId().getBytes(),"utf-8"));
         companyBase.setCapitalReversePerShare(Double.valueOf(this.getCapitalReversePerShare()));
         companyBase.setPerShareEarnings(Double.valueOf(this.getPerShareEarnings()));
         companyBase.setRetainedProfits(Double.valueOf(this.getRetainedProfits()));
