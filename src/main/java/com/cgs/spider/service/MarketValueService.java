@@ -5,6 +5,7 @@ import com.cgs.spider.thread.RequestThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +18,7 @@ public class MarketValueService {
 
     @Autowired
     private InitStockListService initStockListService;
-    @Autowired
+    @Resource
     private RequestThread requestThread;
     private ExecutorService executorService = Executors.newFixedThreadPool(Constant.THREAD_NUM);
 

@@ -4,9 +4,10 @@ package com.cgs.spider.init;
 import com.cgs.spider.service.CompanyDetailService;
 import com.cgs.spider.service.InitStockListService;
 import com.cgs.spider.service.MarketValueService;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Created by Administrator on 2017/5/7.
